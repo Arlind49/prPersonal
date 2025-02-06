@@ -63,7 +63,7 @@ const Home = () => {
       {/* Search Bar */}
       <TextInput
         style={styles.searchBar}
-        placeholder="Search news..."
+        placeholder="Kërko Lajmin"
         value={searchQuery}
         onChangeText={handleSearch}
       />
@@ -76,13 +76,13 @@ const Home = () => {
             {item.urlToImage ? (
               <Image source={{ uri: item.urlToImage }} style={styles.image} />
             ) : (
-              <Text style={styles.noImage}>[No Image Available]</Text>
+              <Text style={styles.noImage}>[Nuk ka foto te disponueshme]</Text>
             )}
             <Text style={styles.newsTitle}>{item.title}</Text>
             <Text>{item.source.name}</Text>
           </View>
         )}
-        ListEmptyComponent={<Text style={styles.noResults}>No results found.</Text>}
+        ListEmptyComponent={<Text style={styles.noResults}>Nuk ka rezultat.</Text>}
       />
     </View>
   );
