@@ -21,7 +21,7 @@ const Home = () => {
         
         if (response.ok) {
           setNews(data.articles);
-          setFilteredNews(data.articles); // Initialize with full news list
+          setFilteredNews(data.articles); 
         } else {
           console.error("Error fetching news:", data.message);
         }
@@ -35,7 +35,7 @@ const Home = () => {
     fetchNews();
   }, []);
 
-  // Function to handle search
+  
   const handleSearch = (text) => {
     setSearchQuery(text);
     if (text === "") {
@@ -58,9 +58,8 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Top News</Text>
+      <Text style={styles.title}>10-shi News</Text>
 
-      {/* Search Bar */}
       <TextInput
         style={styles.searchBar}
         placeholder="Kërko Lajmin"
@@ -98,6 +97,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
+    textAlign: "center",
   },
   searchBar: {
     height: 40,
