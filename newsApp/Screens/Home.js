@@ -3,6 +3,7 @@ import {
   View, Text, FlatList, Image, StyleSheet, TextInput, ActivityIndicator 
 } from "react-native";
 
+
 const API_KEY = "adb353561a7a472c893a68c27369c998"; // Replace with your API Key
 
 const Home = () => {
@@ -50,7 +51,7 @@ const Home = () => {
 
   if (loading) {
     return (
-      <View style={styles.center}>
+      <View style={styles.center, styles.center}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
@@ -71,14 +72,17 @@ const Home = () => {
         data={filteredNews}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <View style={styles.newsItem}>
+          <View style={styles.newsItem,styles.center}>
             {item.urlToImage ? (
               <Image source={{ uri: item.urlToImage }} style={styles.image} />
             ) : (
               <Text style={styles.noImage}>[Nuk ka foto te disponueshme]</Text>
             )}
             <Text style={styles.newsTitle}>{item.title}</Text>
-            <Text>{item.source.name}</Text>
+            <Text style={styles.srcName}>{item.source.name}</Text>
+            <br></br>
+            <br></br>
+
           </View>
         )}
         ListEmptyComponent={<Text style={styles.noResults}>Nuk ka rezultat.</Text>}
@@ -98,27 +102,36 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   searchBar: {
-    height: 40,
-    borderWidth: 1,
+    height: 50,
+    borderWidth: 2,
     borderColor: "#ccc",
-    borderRadius: 8,
+    borderRadius: 10,
     paddingHorizontal: 10,
     marginBottom: 10,
+    textAlign:'center',
+    width: '47%',
+    marginLeft:470
+
   },
   newsItem: {
     marginBottom: 20,
   },
   image: {
-    width: "100%",
-    height: 200,
+    
+    width: "45%",
+    height: 400,
     borderRadius: 10,
   },
   noImage: {
     fontSize: 16,
     fontStyle: "italic",
     color: "gray",
+    
   },
   newsTitle: {
     fontSize: 18,
@@ -136,6 +149,11 @@ const styles = StyleSheet.create({
     color: "gray",
     marginTop: 20,
   },
+  srcName:{
+    fontWeight:"italic",
+    fontFamily: 'Roboto-Regular' 
+
+  }
 });
 
 export default Home;
