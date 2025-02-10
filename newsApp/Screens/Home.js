@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { 
-  View, Text, FlatList, Image, StyleSheet, TextInput, ActivityIndicator 
+  View, Text, FlatList, Image, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Linking 
 } from "react-native";
-
 
 const API_KEY = "adb353561a7a472c893a68c27369c998"; // Replace with your API Key
 
@@ -36,7 +35,6 @@ const Home = () => {
     fetchNews();
   }, []);
 
-  
   const handleSearch = (text) => {
     setSearchQuery(text);
     if (text === "") {
@@ -49,9 +47,13 @@ const Home = () => {
     }
   };
 
+  const handleArticlePress = (url) => {
+    Linking.openURL(url).catch((err) => console.error("Failed to open URL:", err));
+  };
+
   if (loading) {
     return (
-      <View style={styles.center, styles.center}>
+      <View style={styles.center}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
@@ -72,7 +74,10 @@ const Home = () => {
         data={filteredNews}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <View style={styles.newsItem,styles.center}>
+          <TouchableOpacity 
+            style={styles.newsItem,styles.center}
+            onPress={() => handleArticlePress(item.url)} // Open article on press
+          >
             {item.urlToImage ? (
               <Image source={{ uri: item.urlToImage }} style={styles.image} />
             ) : (
@@ -80,17 +85,13 @@ const Home = () => {
             )}
             <Text style={styles.newsTitle}>{item.title}</Text>
             <Text style={styles.srcName}>{item.source.name}</Text>
-            <br></br>
-            <br></br>
-
-          </View>
+          </TouchableOpacity>
         )}
         ListEmptyComponent={<Text style={styles.noResults}>Nuk ka rezultat.</Text>}
       />
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
