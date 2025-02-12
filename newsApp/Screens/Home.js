@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { 
   View, Text, FlatList, Image, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Linking 
 } from "react-native";
+import { FontAwesome } from "@expo/vector-icons"; // Import FontAwesome for heart icon
 
 const API_KEY = "adb353561a7a472c893a68c27369c998"; // Replace with your API Key
 
@@ -10,6 +11,7 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredNews, setFilteredNews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [favorites, setFavorites] = useState({}); // Track favorite articles
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -51,6 +53,14 @@ const Home = () => {
     Linking.openURL(url).catch((err) => console.error("Failed to open URL:", err));
   };
 
+  // Toggle favorite state
+  const toggleFavorite = (index) => {
+    setFavorites((prevFavorites) => ({
+      ...prevFavorites,
+      [index]: !prevFavorites[index], // Toggle the favorite state
+    }));
+  };
+
   if (loading) {
     return (
       <View style={styles.center}>
@@ -63,7 +73,7 @@ const Home = () => {
     <View style={styles.container}>
       <Text style={styles.title}>10-shi News</Text>
 
-      <TextInput
+      <TextInput 
         style={styles.searchBar}
         placeholder="Kërko Lajmin"
         value={searchQuery}
@@ -73,25 +83,51 @@ const Home = () => {
       <FlatList
         data={filteredNews}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity 
-            style={styles.newsItem,styles.center}
-            onPress={() => handleArticlePress(item.url)} // Open article on press
-          >
-            {item.urlToImage ? (
-              <Image source={{ uri: item.urlToImage }} style={styles.image} />
-            ) : (
-              <Text style={styles.noImage}>[Nuk ka foto te disponueshme]</Text>
-            )}
-            <Text style={styles.newsTitle}>{item.title}</Text>
-            <Text style={styles.srcName}>{item.source.name}</Text>
-          </TouchableOpacity>
+        renderItem={({ item, index }) => (
+          <View style={styles.newsItem}>
+            {/* Heart Icon at the Edge */}
+            <TouchableOpacity 
+              style={styles.favoriteIcon} 
+              onPress={() => toggleFavorite(index)} // Toggle heart color on press
+            >
+              <FontAwesome 
+                name="heart" 
+                size={20} 
+                color={favorites[index] ? "red" : "gray"} // Toggle between red and gray
+              />
+            </TouchableOpacity>
+
+            {/* News Content */}
+            <TouchableOpacity 
+              style={styles.newsContent}
+              onPress={() => handleArticlePress(item.url)}
+            >
+              {item.urlToImage ? (
+                <Image source={{ uri: item.urlToImage }} style={styles.image} />
+              ) : (
+                <View>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <Text style={styles.noImage}>[Nuk ka foto te disponueshme]</Text>
+                </View>
+              )}
+              <View style={styles.textContainer}>
+                <Text style={styles.newsTitle}>{item.title}</Text>
+                <Text style={styles.srcName}>{item.source.name}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         )}
         ListEmptyComponent={<Text style={styles.noResults}>Nuk ka rezultat.</Text>}
+        numColumns={5} // Display 5 items in each row
+        columnWrapperStyle={styles.row} // Add style to the row of items
       />
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -103,9 +139,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
   searchBar: {
     height: 50,
@@ -114,35 +147,47 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     marginBottom: 10,
-    textAlign:'center',
-    width: '47%',
-    marginLeft:470
-
+    textAlign: 'center',
+    width: '40%',
+    alignSelf: 'center',
+    fontWeight: 'bold',
   },
   newsItem: {
-    marginBottom: 20,
+    flex: 1,
+    marginRight: 10, 
+    marginBottom: 15, 
+    width: '18%', 
+    backgroundColor: '#f4f4f4',
+    borderRadius: 10,
+    padding: 10,
+    position: "relative", // Needed for absolute positioning of the heart
+  },
+  newsContent: {
+    flex: 1,
+    alignItems: 'center',
   },
   image: {
-    
-    width: "45%",
-    height: 400,
+    width: "100%",
+    height: 100,
     borderRadius: 10,
+  },
+  textContainer: {
+    marginTop: 10,
+  },
+  newsTitle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  srcName: {
+    fontSize: 12,
+    fontStyle: "italic",
+    color: "gray",
   },
   noImage: {
     fontSize: 16,
     fontStyle: "italic",
     color: "gray",
-    
-  },
-  newsTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginVertical: 5,
-  },
-  center: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
   noResults: {
     textAlign: "center",
@@ -150,11 +195,21 @@ const styles = StyleSheet.create({
     color: "gray",
     marginTop: 20,
   },
-  srcName:{
-    fontWeight:"italic",
-    fontFamily: 'Roboto-Regular' 
-
-  }
+  row: {
+    flexWrap: 'wrap',
+    justifyContent: 'space-between', // Distribute space evenly
+  },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  favoriteIcon: {
+    position: "absolute",
+    top: 8, 
+    right: 8, 
+    zIndex: 1, // Ensure it stays above other elements
+  },
 });
 
 export default Home;
