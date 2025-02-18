@@ -94,7 +94,7 @@ const Home = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{category.charAt(0).toUpperCase() + category.slice(1)} News</Text>
+      <Text style={styles.title}>10-shi News</Text>
 
       <TextInput 
         style={styles.searchBar}
@@ -126,7 +126,15 @@ const Home = ({ route }) => {
               {item.urlToImage ? (
                 <Image source={{ uri: item.urlToImage }} style={styles.image} />
               ) : (
+                <View>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
                 <Text style={styles.noImage}>[Nuk ka foto te disponueshme]</Text>
+                </View>
               )}
               <View style={styles.textContainer}>
                 <Text style={styles.newsTitle}>{item.title}</Text>
