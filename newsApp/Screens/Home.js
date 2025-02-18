@@ -2,40 +2,71 @@ import React, { useEffect, useState } from "react";
 import { 
   View, Text, FlatList, Image, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Linking 
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons"; // Import FontAwesome for heart icon
+import { FontAwesome } from "@expo/vector-icons"; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_KEY = "adb353561a7a472c893a68c27369c998"; // Replace with your API Key
+const API_KEY = "adb353561a7a472c893a68c27369c998"; 
 
-const Home = () => {
+const Home = ({ route }) => {
+  const { category } = route.params || { category: "general" }; // Get category from navigation params
+
   const [news, setNews] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredNews, setFilteredNews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [favorites, setFavorites] = useState({}); // Track favorite articles
+  const [favorites, setFavorites] = useState({});
 
   useEffect(() => {
-    const fetchNews = async () => {
+    const loadFavorites = async () => {
       try {
-        const response = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
-        );
-        const data = await response.json();
-        
-        if (response.ok) {
-          setNews(data.articles);
-          setFilteredNews(data.articles); 
-        } else {
-          console.error("Error fetching news:", data.message);
+        const storedFavorites = await AsyncStorage.getItem('favorites');
+        if (storedFavorites) {
+          setFavorites(JSON.parse(storedFavorites));
         }
       } catch (error) {
-        console.error("Network error:", error);
-      } finally {
-        setLoading(false);
+        console.error("Error loading favorites:", error);
       }
     };
-
-    fetchNews();
+    loadFavorites();
   }, []);
+
+  const toggleFavorite = async (articleUrl) => {
+    try {
+      const updatedFavorites = { 
+        ...favorites, 
+        [articleUrl]: !favorites[articleUrl] 
+      };
+      setFavorites(updatedFavorites);
+      await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    } catch (error) {
+      console.error("Error saving favorites:", error);
+    }
+  };
+
+  const fetchNews = async (selectedCategory) => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `https://newsapi.org/v2/top-headlines?country=us&category=${selectedCategory}&apiKey=${API_KEY}`
+      );
+      const data = await response.json();
+      
+      if (response.ok) {
+        setNews(data.articles);
+        setFilteredNews(data.articles);
+      } else {
+        console.error("Error fetching news:", data.message);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNews(category);
+  }, [category]);
 
   const handleSearch = (text) => {
     setSearchQuery(text);
@@ -53,14 +84,6 @@ const Home = () => {
     Linking.openURL(url).catch((err) => console.error("Failed to open URL:", err));
   };
 
-  // Toggle favorite state
-  const toggleFavorite = (index) => {
-    setFavorites((prevFavorites) => ({
-      ...prevFavorites,
-      [index]: !prevFavorites[index], // Toggle the favorite state
-    }));
-  };
-
   if (loading) {
     return (
       <View style={styles.center}>
@@ -71,7 +94,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>10-shi News</Text>
+      <Text style={styles.title}>{category.charAt(0).toUpperCase() + category.slice(1)} News</Text>
 
       <TextInput 
         style={styles.searchBar}
@@ -82,22 +105,20 @@ const Home = () => {
 
       <FlatList
         data={filteredNews}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
+        keyExtractor={(item) => item.url}
+        renderItem={({ item }) => (
           <View style={styles.newsItem}>
-            {/* Heart Icon at the Edge */}
             <TouchableOpacity 
               style={styles.favoriteIcon} 
-              onPress={() => toggleFavorite(index)} // Toggle heart color on press
+              onPress={() => toggleFavorite(item.url)}
             >
               <FontAwesome 
                 name="heart" 
                 size={20} 
-                color={favorites[index] ? "red" : "gray"} // Toggle between red and gray
+                color={favorites[item.url] ? "red" : "gray"}
               />
             </TouchableOpacity>
 
-            {/* News Content */}
             <TouchableOpacity 
               style={styles.newsContent}
               onPress={() => handleArticlePress(item.url)}
@@ -105,13 +126,7 @@ const Home = () => {
               {item.urlToImage ? (
                 <Image source={{ uri: item.urlToImage }} style={styles.image} />
               ) : (
-                <View>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <Text style={styles.noImage}>[Nuk ka foto te disponueshme]</Text>
-                </View>
+                <Text style={styles.noImage}>[Nuk ka foto te disponueshme]</Text>
               )}
               <View style={styles.textContainer}>
                 <Text style={styles.newsTitle}>{item.title}</Text>
@@ -121,8 +136,8 @@ const Home = () => {
           </View>
         )}
         ListEmptyComponent={<Text style={styles.noResults}>Nuk ka rezultat.</Text>}
-        numColumns={5} // Display 5 items in each row
-        columnWrapperStyle={styles.row} // Add style to the row of items
+        numColumns={2}
+        columnWrapperStyle={styles.row}
       />
     </View>
   );
@@ -148,7 +163,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
     textAlign: 'center',
-    width: '40%',
+    width: '80%',
     alignSelf: 'center',
     fontWeight: 'bold',
   },
@@ -156,11 +171,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 10, 
     marginBottom: 15, 
-    width: '18%', 
+    width: '48%', 
     backgroundColor: '#f4f4f4',
     borderRadius: 10,
     padding: 10,
-    position: "relative", // Needed for absolute positioning of the heart
+    position: "relative",
   },
   newsContent: {
     flex: 1,
@@ -168,7 +183,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 100,
+    height: 150,
     borderRadius: 10,
   },
   textContainer: {
@@ -178,16 +193,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     marginBottom: 5,
+    textAlign: "center",
   },
   srcName: {
     fontSize: 12,
     fontStyle: "italic",
     color: "gray",
-  },
-  noImage: {
-    fontSize: 16,
-    fontStyle: "italic",
-    color: "gray",
+    textAlign: "center",
   },
   noResults: {
     textAlign: "center",
@@ -197,7 +209,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexWrap: 'wrap',
-    justifyContent: 'space-between', // Distribute space evenly
+    justifyContent: 'space-between',
   },
   center: {
     flex: 1,
@@ -208,7 +220,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 8, 
     right: 8, 
-    zIndex: 1, // Ensure it stays above other elements
+    zIndex: 1,
   },
 });
 

@@ -1,36 +1,42 @@
-import React from "react";
-import { StyleSheet, View, Text } from "react-native-web";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Button } from '@react-navigation/elements';
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const Favorites = ({ navigation }) => {
+  const [favorites, setFavorites] = useState([]);
 
-const Favorites = ({ navigation}) => {
+  useEffect(() => {
+    const loadFavorites = async () => {
+      try {
+        const storedFavorites = await AsyncStorage.getItem('favorites');
+        if (storedFavorites) {
+          const parsedFavorites = JSON.parse(storedFavorites);
+          const favoritedArticles = Object.keys(parsedFavorites).filter(url => parsedFavorites[url]);
+          setFavorites(favoritedArticles);
+        }
+      } catch (error) {
+        console.error("Error loading favorites:", error);
+      }
+    };
 
-    return (
-        <View style={styles.container}>  {/* Use `View` instead of `view` */}
-            <Text style={styles.title}>
-                Welcomte to Your Favorites
-            </Text>
-            <Text>Ska sen niherrrr</Text>
-            {/* <Button title="Preke" onPress={() => navigation.navigate("Products")} /> */}
+    loadFavorites();
+  }, []);
 
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>❤️ Favorited News</Text>
+
+      {favorites.length === 0 ? (
+        <Text style={styles.noFavorites}>No favorite articles yet.</Text>
+      ) : (
+        <FlatList
+          data={favorites}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => <Text>{item}</Text>}
+        />
+      )}
+    </View>
+  );
 };
-
-const styles = StyleSheet.create({  // Correct the spelling of `StyleSheet`
-    container: {
-        flex: 1,
-        paddingTop: 80,
-        paddingHorizontal: 20,
-        backgroundColor: '#fff',
-    },
-    title: {
-        fontSize: 24,
-        marginBottom: 20,
-        textAlign: "center",
-    },
-});
 
 export default Favorites;
