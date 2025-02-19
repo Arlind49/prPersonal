@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const API_KEY = "adb353561a7a472c893a68c27369c998"; 
 
 const Home = ({ route }) => {
-  const { category } = route.params || { category: "general" }; // Get category from navigation params
+  const { category } = route.params || { category: "general" };
 
   const [news, setNews] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -126,14 +126,8 @@ const Home = ({ route }) => {
               {item.urlToImage ? (
                 <Image source={{ uri: item.urlToImage }} style={styles.image} />
               ) : (
-                <View>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-                <Text style={styles.noImage}>[Nuk ka foto te disponueshme]</Text>
+                <View style={styles.noImageContainer}>
+                  <Text style={styles.noImage}>[Nuk ka foto te disponueshme]</Text>
                 </View>
               )}
               <View style={styles.textContainer}>
@@ -144,7 +138,7 @@ const Home = ({ route }) => {
           </View>
         )}
         ListEmptyComponent={<Text style={styles.noResults}>Nuk ka rezultat.</Text>}
-        numColumns={2}
+        numColumns={5} 
         columnWrapperStyle={styles.row}
       />
     </View>
@@ -177,9 +171,8 @@ const styles = StyleSheet.create({
   },
   newsItem: {
     flex: 1,
-    marginRight: 10, 
-    marginBottom: 15, 
-    width: '48%', 
+    margin: 5,
+    width: '19%', // Adjusted for 5 items per row
     backgroundColor: '#f4f4f4',
     borderRadius: 10,
     padding: 10,
@@ -191,20 +184,20 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 150,
+    height: 100, // Adjusted to fit 5 per row
     borderRadius: 10,
   },
   textContainer: {
     marginTop: 10,
   },
   newsTitle: {
-    fontSize: 14,
+    fontSize: 12, // Adjusted for smaller size
     fontWeight: "bold",
     marginBottom: 5,
     textAlign: "center",
   },
   srcName: {
-    fontSize: 12,
+    fontSize: 10,
     fontStyle: "italic",
     color: "gray",
     textAlign: "center",
@@ -229,6 +222,19 @@ const styles = StyleSheet.create({
     top: 8, 
     right: 8, 
     zIndex: 1,
+  },
+  noImageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 100,
+    backgroundColor: "#ddd",
+    borderRadius: 10,
+    width: "100%",
+  },
+  noImage: {
+    fontSize: 12,
+    color: "#666",
+    textAlign: "center",
   },
 });
 

@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Import Screens
 import Home from './Screens/Home';  
 import Favorites from './Screens/Favorites';  
+import Zgjedhjet2025 from './Screens/Zgjedhjet2025';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -47,8 +48,8 @@ export default function App() {
             let iconName;
             if (route.name === 'Home') {
               iconName = focused ? 'home' : 'home-outline';
-            } else if (route.name === 'Favorites') {
-              iconName = focused ? 'heart' : 'heart-outline';
+            } else if (route.name === 'Zgjedhjet2025') {
+              iconName = focused ? 'checkmark-circle' : 'checkmark-circle-outline';
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
@@ -57,6 +58,7 @@ export default function App() {
         })}
       >
         <Tab.Screen name="Home" component={DrawerNavigator} options={{ headerShown: false }} />
+        <Tab.Screen name="Zgjedhjet2025" component={Zgjedhjet2025} options={{ title: 'Zgjedhjet 2025' }} />
       </Tab.Navigator>
     </NavigationContainer>
   );

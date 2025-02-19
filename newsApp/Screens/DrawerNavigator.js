@@ -24,7 +24,7 @@ const DrawerNavigator = () => {
             key={category.key} 
             name={category.label} 
             component={HomeScreen} 
-            initialParams={{ category: category.key }} // Pass category as a parameter
+            initialParams={{ category: category.key }} 
           />
         ))}
       </Drawer.Navigator>
