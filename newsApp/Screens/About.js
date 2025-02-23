@@ -22,10 +22,10 @@ const About = () => {
         Qëllimi ynë është t’ju mbajmë të informuar me lajme në kohë. Pavarësisht nëse shfletoni tendencat më të fundit apo thelloni në analiza, ne jemi këtu për ju.
       </Text>
       <View style={styles.iconContainer}>
-        <TouchableOpacity onPress={() => openLink('https://instagram.com/yourinstagram')}>
+        <TouchableOpacity onPress={() => openLink('https://www.instagram.com/_arlindselimi_/')}>
           <Ionicons name="logo-instagram" size={32} color="#fff" style={styles.icon} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => openLink('https://github.com/yourgithub')}>
+        <TouchableOpacity onPress={() => openLink('https://github.com/Arlind49')}>
           <Ionicons name="logo-github" size={32} color="#fff" style={styles.icon} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => openLink('https://www.linkedin.com/in/arlind-selimi-10101010101010101010/')}>
