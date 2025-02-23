@@ -15,11 +15,6 @@ const Zgjedhjet2025 = () => {
     <View style={styles.container}>
       <Text style={styles.title}>REZULTATET PRELIMINARE</Text>
       <Text style={styles.subtitle}>10-shi News</Text>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
       <FlatList
         data={Zgjedhjet2025Data}
         keyExtractor={(item) => item.name}
@@ -49,19 +44,19 @@ const Zgjedhjet2025 = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EAF0F6",
+    backgroundColor: "#121212",
     padding: 30,
     alignItems: "center",
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#D70000",
+    color: "#fff",
     marginBottom: 20,
   },
   subtitle: {
     fontSize: 25,
-    color: "#555",
+    color: "#aaa",
     marginBottom: 20,
   },
   pollItem: {
@@ -71,18 +66,20 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   pollLabel: {
-    width: 250,
-    fontSize: 28, 
+    flex: 1,
+    fontSize: 28,
     fontWeight: "bold",
+    color: "#fff",
   },
   pollPercentage: {
     marginLeft: 15,
-    fontSize: 24, 
+    fontSize: 24,
     fontWeight: "bold",
+    color: "#fff",
   },
   footer: {
     marginTop: 30,
-    fontSize: 24, 
+    fontSize: 24,
     fontWeight: "bold",
     backgroundColor: "#D70000",
     color: "white",

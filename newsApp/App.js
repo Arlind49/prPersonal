@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -23,9 +23,18 @@ const categories = [
   { key: "technology", label: "Technology" },
 ];
 
-// **Drawer Navigator for Categories**
+// Drawer Navigator for Categories
 const DrawerNavigator = () => (
-  <Drawer.Navigator initialRouteName="General">
+  <Drawer.Navigator 
+    initialRouteName="General"
+    screenOptions={{
+      headerStyle: { backgroundColor: '#1F1F1F' },
+      headerTintColor: '#fff',
+      drawerStyle: { backgroundColor: '#121212' },
+      drawerActiveTintColor: '#fff',
+      drawerInactiveTintColor: '#888',
+    }}
+  >
     {categories.map((category) => (
       <Drawer.Screen 
         key={category.key} 
@@ -37,13 +46,15 @@ const DrawerNavigator = () => (
   </Drawer.Navigator>
 );
 
-// **Bottom Tab Navigator**
+// Bottom Tab Navigator with Dark Theme
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme}>
       <Tab.Navigator 
         initialRouteName="Home"
         screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarStyle: { backgroundColor: '#1F1F1F' },
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === 'Home') {
@@ -53,12 +64,16 @@ export default function App() {
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'gray',
-          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: '#fff',
+          tabBarInactiveTintColor: '#888',
         })}
       >
-        <Tab.Screen name="Home" component={DrawerNavigator} options={{ headerShown: false }} />
-        <Tab.Screen name="Zgjedhjet2025" component={Zgjedhjet2025} options={{ title: 'Zgjedhjet 2025' }} />
+        <Tab.Screen name="Home" component={DrawerNavigator} />
+        <Tab.Screen 
+          name="Zgjedhjet2025" 
+          component={Zgjedhjet2025} 
+          options={{ title: 'Zgjedhjet 2025' }} 
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
