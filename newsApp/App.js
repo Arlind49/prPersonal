@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './Screens/Home';  
 import Favorites from './Screens/Favorites';  
 import Zgjedhjet2025 from './Screens/Zgjedhjet2025';
+import About from './Screens/About';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -40,7 +41,7 @@ const DrawerNavigator = () => (
         key={category.key} 
         name={category.label} 
         component={Home} 
-        initialParams={{ category: category.key }} // Pass category to Home
+        initialParams={{ category: category.key }}
       />
     ))}
   </Drawer.Navigator>
@@ -61,6 +62,8 @@ export default function App() {
               iconName = focused ? 'home' : 'home-outline';
             } else if (route.name === 'Zgjedhjet2025') {
               iconName = focused ? 'checkmark-circle' : 'checkmark-circle-outline';
+            } else if (route.name === 'About') {
+              iconName = focused ? 'information-circle' : 'information-circle-outline';
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
@@ -73,6 +76,11 @@ export default function App() {
           name="Zgjedhjet2025" 
           component={Zgjedhjet2025} 
           options={{ title: 'Zgjedhjet 2025' }} 
+        />
+        <Tab.Screen 
+          name="About" 
+          component={About} 
+          options={{ title: 'About' }} 
         />
       </Tab.Navigator>
     </NavigationContainer>
