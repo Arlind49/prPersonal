@@ -1,16 +1,15 @@
 import React from 'react';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Import Screens
 import Home from './Screens/Home';  
-import Favorites from './Screens/Favorites';  
 import Zgjedhjet2025 from './Screens/Zgjedhjet2025';
 import About from './Screens/About';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 const Drawer = createDrawerNavigator();
 
 // News Categories for Drawer
@@ -47,16 +46,17 @@ const DrawerNavigator = () => (
   </Drawer.Navigator>
 );
 
-// Bottom Tab Navigator with Dark Theme
+// Top Tab Navigator with Dark Theme and Icons
 export default function App() {
   return (
     <NavigationContainer theme={DarkTheme}>
       <Tab.Navigator 
         initialRouteName="Home"
         screenOptions={({ route }) => ({
-          headerShown: false,
+          tabBarShowLabel: false,
           tabBarStyle: { backgroundColor: '#1F1F1F' },
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIndicatorStyle: { backgroundColor: '#fff' },
+          tabBarIcon: ({ focused, color }) => {
             let iconName;
             if (route.name === 'Home') {
               iconName = focused ? 'home' : 'home-outline';
@@ -65,23 +65,15 @@ export default function App() {
             } else if (route.name === 'About') {
               iconName = focused ? 'information-circle' : 'information-circle-outline';
             }
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return <Ionicons name={iconName} size={24} color={color} />;
           },
           tabBarActiveTintColor: '#fff',
           tabBarInactiveTintColor: '#888',
         })}
       >
         <Tab.Screen name="Home" component={DrawerNavigator} />
-        <Tab.Screen 
-          name="Zgjedhjet2025" 
-          component={Zgjedhjet2025} 
-          options={{ title: 'Zgjedhjet 2025' }} 
-        />
-        <Tab.Screen 
-          name="About" 
-          component={About} 
-          options={{ title: 'About' }} 
-        />
+        <Tab.Screen name="Zgjedhjet2025" component={Zgjedhjet2025} />
+        <Tab.Screen name="About" component={About} />
       </Tab.Navigator>
     </NavigationContainer>
   );

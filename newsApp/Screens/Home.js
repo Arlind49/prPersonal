@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { 
-  SafeAreaView, View, Text, FlatList, ImageBackground, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Linking 
+  SafeAreaView, View, Text, FlatList, ImageBackground, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Linking, ScrollView
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -122,15 +122,17 @@ const Home = ({ route }) => {
           onChangeText={handleSearch}
         />
       </View>
-      <FlatList 
-        data={filteredNews}
-        keyExtractor={(item, index) => item.url + index.toString()}
-        renderItem={renderArticle}
-        numColumns={2}
-        contentContainerStyle={styles.listContent}
-        columnWrapperStyle={styles.columnWrapper}
-        ListEmptyComponent={<Text style={styles.noResults}>No results found.</Text>}
-      />
+      <ScrollView style={styles.darkScrollBar}>
+        <FlatList 
+          data={filteredNews}
+          keyExtractor={(item, index) => item.url + index.toString()}
+          renderItem={renderArticle}
+          numColumns={2}
+          contentContainerStyle={styles.listContent}
+          columnWrapperStyle={styles.columnWrapper}
+          ListEmptyComponent={<Text style={styles.noResults}>No results found.</Text>}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -139,6 +141,10 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "#121212",
+  },
+  darkScrollBar: {
+    scrollbarColor: "#2A2A2A #121212",
+    scrollbarWidth: "thin",
   },
   header: {
     padding: 16,
