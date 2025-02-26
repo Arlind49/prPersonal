@@ -55,7 +55,10 @@ const Home = ({ route, navigation }) => {
 
   const toggleFavorite = async (articleUrl) => {
     try {
-      const updatedFavorites = { ...favorites, [articleUrl]: !favorites[articleUrl] };
+      const updatedFavorites = {
+        ...favorites,
+        [articleUrl]: !favorites[articleUrl],
+      };
       setFavorites(updatedFavorites);
       await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     } catch (error) {
@@ -161,16 +164,16 @@ const Home = ({ route, navigation }) => {
             width: 12px;
           }
           .darkScrollBar::-webkit-scrollbar-track {
-            background: #000;
+            background: #111; /* Track color */
           }
           .darkScrollBar::-webkit-scrollbar-thumb {
-            background-color: #000;
+            background-color: #333; /* Thumb color */
             border-radius: 20px;
           }
           /* For Firefox */
           .darkScrollBar {
             scrollbar-width: thin;
-            scrollbar-color: #000 #000;
+            scrollbar-color: #333 #111; /* Thumb color, Track color */
           }
         `}
       </style>
@@ -186,8 +189,15 @@ const Home = ({ route, navigation }) => {
               value={searchQuery}
               onChangeText={handleSearch}
             />
-            <TouchableOpacity onPress={() => setShowCategories(!showCategories)}>
-              <Ionicons name="menu" size={28} color="#fff" style={styles.menuIcon} />
+            <TouchableOpacity
+              onPress={() => setShowCategories(!showCategories)}
+            >
+              <Ionicons
+                name="menu"
+                size={28}
+                color="#fff"
+                style={styles.menuIcon}
+              />
             </TouchableOpacity>
           </View>
         </View>
