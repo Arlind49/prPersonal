@@ -17,7 +17,7 @@ const About = () => {
     try {
       await Linking.openURL(url);
     } catch (error) {
-      console.error("Dështoi hapja e URL-së:", error);
+      console.error(error);
     }
   };
 
@@ -66,7 +66,7 @@ const About = () => {
         <Text style={styles.subtitle}>Thank You For Visiting :)</Text>
       </View>
 
-      <Text style={styles.footer}>© 2025 A.S News | Versioni 1.0.0</Text>
+      <Text style={styles.footer}>© 2025 A.S News</Text>
     </ScrollView>
   );
 };

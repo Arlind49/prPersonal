@@ -3,18 +3,15 @@ import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-// Import Screens
 import Home from "./Screens/Home";
 import Zgjedhjet2025 from "./Screens/Zgjedhjet2025";
 import About from "./Screens/About";
 
 const Tab = createMaterialTopTabNavigator();
 
-// Top Tab Navigator with Dark Theme and Icons
 export default function App() {
   return (
     <>
-      {/* Inject global CSS styles for dark scrollbar */}
       <style>
         {`
           /* Webkit browsers (Chrome, Safari) */

@@ -17,7 +17,6 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 const API_KEY = "adb353561a7a472c893a68c27369c998";
 
-// Define the list of categories
 const categoriesList = [
   "general",
   "business",
@@ -36,7 +35,6 @@ const Home = ({ route, navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState({});
-  // State for toggling the categories bar visibility
   const [showCategories, setShowCategories] = useState(false);
 
   useEffect(() => {
@@ -86,7 +84,6 @@ const Home = ({ route, navigation }) => {
     }
   };
 
-  // Fetch news whenever the selected category changes
   useEffect(() => {
     fetchNews(selectedCategory);
   }, [selectedCategory]);
@@ -157,28 +154,8 @@ const Home = ({ route, navigation }) => {
 
   return (
     <>
-      {/* Inject custom scrollbar styles for web */}
-      <style>
-        {`
-          .darkScrollBar::-webkit-scrollbar {
-            width: 12px;
-          }
-          .darkScrollBar::-webkit-scrollbar-track {
-            background: #111; /* Track color */
-          }
-          .darkScrollBar::-webkit-scrollbar-thumb {
-            background-color: #333; /* Thumb color */
-            border-radius: 20px;
-          }
-          /* For Firefox */
-          .darkScrollBar {
-            scrollbar-width: thin;
-            scrollbar-color: #333 #111; /* Thumb color, Track color */
-          }
-        `}
-      </style>
+     
       <SafeAreaView style={styles.safeArea}>
-        {/* Header with title, search bar, and menu toggle */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>A.S News</Text>
           <View style={styles.searchContainer}>
@@ -201,7 +178,7 @@ const Home = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        {/* Conditionally render Categories Bar */}
+
         {showCategories && (
           <View style={styles.categoriesContainer}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -214,8 +191,7 @@ const Home = ({ route, navigation }) => {
                   ]}
                   onPress={() => {
                     setSelectedCategory(cat);
-                    // Optionally hide the categories after selection
-                    setShowCategories(false);
+                    setShowCategories(true);
                   }}
                 >
                   <Text
@@ -231,7 +207,6 @@ const Home = ({ route, navigation }) => {
             </ScrollView>
           </View>
         )}
-        {/* News List */}
         <ScrollView style={styles.darkScrollBar} className="darkScrollBar">
           <FlatList
             data={filteredNews}
@@ -324,7 +299,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   cardImage: {
-    height: 200,
+    height: 250,
     justifyContent: "flex-end",
     width: "100%"
   },

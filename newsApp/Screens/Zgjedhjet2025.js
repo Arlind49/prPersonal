@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import Svg, { Rect } from "react-native-svg";
 
-// Election data for different cities
 const electionData = {
   Te_Gjitha: [
     { name: "VV", percentage: 40.9, color: "#FF0000" },
@@ -98,7 +97,6 @@ const Zgjedhjet2025 = () => {
         ))}
       </View>
 
-      {/* Poll Results */}
       <FlatList
         data={electionData[selectedCity]}
         keyExtractor={(item) => item.name}
@@ -130,7 +128,7 @@ const Zgjedhjet2025 = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#181818", // Slightly lighter black for contrast
+    backgroundColor: "#181818", 
     padding: 25,
     alignItems: "center",
   },
@@ -139,7 +137,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
     marginBottom: 15,
-    textTransform: "uppercase", // Makes title stand out
+    textTransform: "uppercase", 
   },
   subtitle: {
     fontSize: 22,
@@ -147,7 +145,6 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
 
-  // City Selection Bar
   cityBar: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -161,15 +158,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     marginVertical: 6,
     borderRadius: 20,
-    backgroundColor: "#2C2C2C", // Darker button background
+    backgroundColor: "#2C2C2C", 
     shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 2 },
-    transition: "background-color 0.3s", // For Web (Hover Effect)
+    transition: "background-color 0.3s", 
   },
   selectedCityButton: {
     backgroundColor: "#D70000",
-    transform: [{ scale: 1.05 }], // Slightly enlarges selected button
+    transform: [{ scale: 1.05 }], 
   },
   cityText: {
     color: "#fff",
@@ -181,12 +178,11 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
 
-  // Polling Result Items
   pollItem: {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    marginVertical: 18, // Increased spacing for readability
+    marginVertical: 18, 
   },
   pollLabel: {
     flex: 1,
@@ -199,9 +195,9 @@ const styles = StyleSheet.create({
   barContainer: {
     flex: 3,
     marginHorizontal: 12,
-    backgroundColor: "#292929", // Darker background for contrast
-    borderRadius: 10, // Makes bars rounded
-    overflow: "hidden", // Ensures bars don’t go outside
+    backgroundColor: "#292929", 
+    borderRadius: 10, 
+    overflow: "hidden", 
   },
   pollPercentage: {
     width: 80,
@@ -209,12 +205,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
     textAlign: "center",
-    backgroundColor: "#222", // Darker box for contrast
+    backgroundColor: "#222", 
     paddingVertical: 5,
     borderRadius: 8,
   },
 
-  // Footer
   footer: {
     marginTop: 30,
     fontSize: 22,
