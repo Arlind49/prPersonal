@@ -4,6 +4,13 @@ import Svg, { Rect } from "react-native-svg";
 
 // Election data for different cities
 const electionData = {
+  Te_Gjitha: [
+    { name: "VV", percentage: 40.9, color: "#FF0000" },
+    { name: "PDK", percentage: 22.03, color: "#5DADEC" },
+    { name: "LDK", percentage: 17.64, color: "#6C93C4" },
+    { name: "AAK-NISMA", percentage: 7.46, color: "#5B4B8A" },
+    { name: "Koalicioni për Familjen", percentage: 2.27, color: "#7B68EE" },
+  ],
   Prishtina: [
     { name: "VV", percentage: 45.2, color: "#FF0000" },
     { name: "PDK", percentage: 20.1, color: "#5DADEC" },
@@ -26,11 +33,11 @@ const electionData = {
     { name: "Koalicioni për Familjen", percentage: 1.32, color: "#7B68EE" },
   ],
   Ferizaj: [
-    { name: "VV", percentage: 42.3, color: "#FF0000" },
-    { name: "PDK", percentage: 24.7, color: "#5DADEC" },
-    { name: "LDK", percentage: 15.2, color: "#6C93C4" },
-    { name: "AAK-NISMA", percentage: 9.8, color: "#5B4B8A" },
-    { name: "Koalicioni për Familjen", percentage: 3.0, color: "#7B68EE" },
+    { name: "VV", percentage: 51.79, color: "#FF0000" },
+    { name: "PDK", percentage: 26.76, color: "#5DADEC" },
+    { name: "LDK", percentage: 13.20, color: "#6C93C4" },
+    { name: "AAK-NISMA", percentage: 3.18, color: "#5B4B8A" },
+    { name: "Koalicioni për Familjen", percentage: 1.86, color: "#7B68EE" },
   ],
   Peja: [
     { name: "VV", percentage: 41.06, color: "#FF0000" },
@@ -40,23 +47,24 @@ const electionData = {
     { name: "Koalicioni për Familjen", percentage: 1.14, color: "#7B68EE" },
   ],
   Gjilan: [
-    { name: "VV", percentage: 36.7, color: "#FF0000" },
-    { name: "PDK", percentage: 25.9, color: "#5DADEC" },
-    { name: "LDK", percentage: 18.6, color: "#6C93C4" },
-    { name: "AAK-NISMA", percentage: 12.3, color: "#5B4B8A" },
-    { name: "Koalicioni për Familjen", percentage: 2.5, color: "#7B68EE" },
+    { name: "VV", percentage: 51.46, color: "#FF0000" },
+    { name: "LDK", percentage: 22.20, color: "#6C93C4" },
+    { name: "PDK", percentage: 16.89, color: "#5DADEC" },
+    { name: "Koalicioni për Familjen", percentage: 2.58, color: "#7B68EE" },
+    { name: "AAK-NISMA", percentage: 2.54, color: "#5B4B8A" },
+
   ],
   Podujeva: [
-    { name: "VV", percentage: 36.7, color: "#FF0000" },
-    { name: "PDK", percentage: 25.9, color: "#5DADEC" },
-    { name: "LDK", percentage: 18.6, color: "#6C93C4" },
-    { name: "AAK-NISMA", percentage: 12.3, color: "#5B4B8A" },
-    { name: "Koalicioni për Familjen", percentage: 2.5, color: "#7B68EE" },
+    { name: "VV", percentage: 49.77, color: "#FF0000" },
+    { name: "LDK", percentage: 29.52, color: "#6C93C4" },
+    { name: "PDK", percentage: 14.66, color: "#5DADEC" },
+    { name: "Koalicioni për Familjen", percentage: 3.09, color: "#7B68EE" },
+    { name: "AAK-NISMA", percentage: 1.8, color: "#5B4B8A" },
   ],
 };
 
 const Zgjedhjet2025 = () => {
-  const [selectedCity, setSelectedCity] = useState("Prishtina");
+  const [selectedCity, setSelectedCity] = useState("Te_Gjitha");
 
   return (
     <View style={styles.container}>
