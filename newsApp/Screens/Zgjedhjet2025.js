@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import Svg, { Rect } from "react-native-svg";
 
 // Election data for different cities
@@ -35,7 +41,7 @@ const electionData = {
   Ferizaj: [
     { name: "VV", percentage: 51.79, color: "#FF0000" },
     { name: "PDK", percentage: 26.76, color: "#5DADEC" },
-    { name: "LDK", percentage: 13.20, color: "#6C93C4" },
+    { name: "LDK", percentage: 13.2, color: "#6C93C4" },
     { name: "AAK-NISMA", percentage: 3.18, color: "#5B4B8A" },
     { name: "Koalicioni për Familjen", percentage: 1.86, color: "#7B68EE" },
   ],
@@ -48,11 +54,10 @@ const electionData = {
   ],
   Gjilan: [
     { name: "VV", percentage: 51.46, color: "#FF0000" },
-    { name: "LDK", percentage: 22.20, color: "#6C93C4" },
+    { name: "LDK", percentage: 22.2, color: "#6C93C4" },
     { name: "PDK", percentage: 16.89, color: "#5DADEC" },
     { name: "Koalicioni për Familjen", percentage: 2.58, color: "#7B68EE" },
     { name: "AAK-NISMA", percentage: 2.54, color: "#5B4B8A" },
-
   ],
   Podujeva: [
     { name: "VV", percentage: 49.77, color: "#FF0000" },
@@ -102,7 +107,15 @@ const Zgjedhjet2025 = () => {
             <Text style={styles.pollLabel}>{item.name}</Text>
             <View style={styles.barContainer}>
               <Svg height="20" width="100%">
-                <Rect x="0" y="0" width={`${item.percentage}%`} height="20" fill={item.color} rx="10" ry="10" />
+                <Rect
+                  x="0"
+                  y="0"
+                  width={`${item.percentage}%`}
+                  height="20"
+                  fill={item.color}
+                  rx="10"
+                  ry="10"
+                />
               </Svg>
             </View>
             <Text style={styles.pollPercentage}>{item.percentage}%</Text>
@@ -114,80 +127,106 @@ const Zgjedhjet2025 = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121212",
-    padding: 30,
+    backgroundColor: "#181818", // Slightly lighter black for contrast
+    padding: 25,
     alignItems: "center",
   },
   title: {
-    fontSize: 32,
+    fontSize: 34,
     fontWeight: "bold",
-    color: "#fff",
-    marginBottom: 10,
+    color: "#ffffff",
+    marginBottom: 15,
+    textTransform: "uppercase", // Makes title stand out
   },
   subtitle: {
-    fontSize: 25,
-    color: "#aaa",
-    marginBottom: 20,
+    fontSize: 22,
+    color: "#bbbbbb",
+    marginBottom: 25,
   },
+
+  // City Selection Bar
   cityBar: {
     flexDirection: "row",
-    flexWrap: "wrap", // Allows cities to wrap to the next line
+    flexWrap: "wrap",
     justifyContent: "center",
-    marginBottom: 20,
+    marginBottom: 25,
+    paddingHorizontal: 10,
   },
   cityButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    marginHorizontal: 5,
-    marginVertical: 5, // Added spacing between rows
-    borderRadius: 8,
-    backgroundColor: "#333",
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+    marginHorizontal: 6,
+    marginVertical: 6,
+    borderRadius: 20,
+    backgroundColor: "#2C2C2C", // Darker button background
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    transition: "background-color 0.3s", // For Web (Hover Effect)
   },
   selectedCityButton: {
     backgroundColor: "#D70000",
+    transform: [{ scale: 1.05 }], // Slightly enlarges selected button
   },
   cityText: {
     color: "#fff",
     fontSize: 18,
+    fontWeight: "500",
   },
   selectedCityText: {
     fontWeight: "bold",
+    textTransform: "uppercase",
   },
+
+  // Polling Result Items
   pollItem: {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    marginVertical: 15,
+    marginVertical: 18, // Increased spacing for readability
   },
   pollLabel: {
     flex: 1,
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
-    color: "#fff",
-    paddingRight: 15,
+    color: "#ffffff",
+    textAlign: "right",
+    paddingRight: 20,
   },
   barContainer: {
     flex: 3,
-    marginHorizontal: 10,
+    marginHorizontal: 12,
+    backgroundColor: "#292929", // Darker background for contrast
+    borderRadius: 10, // Makes bars rounded
+    overflow: "hidden", // Ensures bars don’t go outside
   },
   pollPercentage: {
-    marginLeft: 15,
-    fontSize: 24,
+    width: 80,
+    fontSize: 22,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#ffffff",
+    textAlign: "center",
+    backgroundColor: "#222", // Darker box for contrast
+    paddingVertical: 5,
+    borderRadius: 8,
   },
+
+  // Footer
   footer: {
     marginTop: 30,
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
     backgroundColor: "#D70000",
-    color: "white",
-    padding: 15,
-    borderRadius: 8,
+    color: "#ffffff",
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 4 },
   },
 });
 

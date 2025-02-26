@@ -318,14 +318,15 @@ const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    margin: 8,
+    margin: 22,
     backgroundColor: "#222",
     borderRadius: 8,
     overflow: "hidden",
   },
   cardImage: {
-    height: 150,
+    height: 200,
     justifyContent: "flex-end",
+    width: "100%"
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -362,3 +363,5 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+
+
